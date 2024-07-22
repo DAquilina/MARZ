@@ -90,9 +90,17 @@ CREATE TABLE `Product` (
 -- Dumping data for table `Product`
 --
 
+-- Image source: https://www.cira.ca/en/stock-gallery/
+
 LOCK TABLES `Product` WRITE;
 /*!40000 ALTER TABLE `Product` DISABLE KEYS */;
-INSERT INTO `Product` VALUES (1,'Hat','t','Active'),(2,'Shoes','t','Active'),(3,'Pants','t','Active'),(4,'Shirt','t','InActive'),(5,'Coat','t','InActive');
+INSERT INTO `Product`
+  VALUES
+    (1,'Hat','https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-190-scaled.jpg','Active'),
+    (2,'Shoes','https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-199-scaled.jpg','Active'),
+    (3,'Pants','https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-283-scaled.jpg','Active'),
+    (4,'Shirt','https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-368-moose-hug.jpg','InActive'),
+    (5,'Coat','https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-363-scaled.jpg','InActive');
 /*!40000 ALTER TABLE `Product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

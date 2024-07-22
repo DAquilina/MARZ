@@ -9,7 +9,7 @@ const getInPipelineData = async () => {
       InProgress: [],
       QA: [],
     };
-    let errorOccured = false;
+    let errorOccurred = false;
     try {
       const response = await axios.get(INPIPELINE_URL);
       if (response?.status === 200) {
@@ -23,9 +23,9 @@ const getInPipelineData = async () => {
       }
     } catch(err) {
       console.error(err);
-      errorOccured = true;
+      errorOccurred = true;
     }
-    return { orderData, errorOccured };
+    return { orderData, errorOccurred };
 };
 
 const UPDATE_STATUS_URL = '/api/orders/update_status';

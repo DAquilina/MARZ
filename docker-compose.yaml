@@ -15,6 +15,7 @@ services:
     depends_on:
         - webapp
         - api.orders
+        - api.products
 
   webapp:
     image: webapp:latest
@@ -23,6 +24,7 @@ services:
       - 3000:3000
     depends_on:
       - api.orders
+      - api.products
       - mariadb
     build:
       context: ./webapp
@@ -48,8 +50,29 @@ services:
       - ./api.orders:/api.orders
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - MYSQL_USER=interviewer
-      - MYSQL_PASSWORD=changeme
+      - MYSQL_USER=candidate
+      - MYSQL_PASSWORD=MARZ_p@ss
+      - MYSQL_HOST=172.17.0.1
+      - MYSQL_PORT=3306
+    networks:
+      - app_network
+
+  api.products:
+    image: api-products:latest
+    container_name: api-products
+    ports:
+      - 5002:5002
+    build:
+      context: ./api.products
+      dockerfile: Dockerfile
+    depends_on:
+      - mariadb
+    volumes:
+      - ./api.products:/api.products
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - MYSQL_USER=candidate
+      - MYSQL_PASSWORD=MARZ_p@ss
       - MYSQL_HOST=172.17.0.1
       - MYSQL_PORT=3306
     networks:
@@ -62,13 +85,13 @@ services:
       - 3306:3306
     environment:
       MYSQL_DATABASE: marz
-      MYSQL_USER: interviewer
-      MYSQL_ROOT_PASSWORD: changeme
-      MYSQL_PASSWORD: changeme
+      MYSQL_USER: candidate
+      MYSQL_ROOT_PASSWORD: MARZ_p@ss
+      MYSQL_PASSWORD: MARZ_p@ss
     restart: on-failure
     volumes:
-     - ./db/schema.sql:/docker-entrypoint-initdb.d/1.sql
-     - ./db/data.sql:/docker-entrypoint-initdb.d/2.sql
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./db/data.sql:/docker-entrypoint-initdb.d/2.sql
     networks:
       - app_network
 
