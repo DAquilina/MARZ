@@ -1,9 +1,9 @@
 import React from 'react';
 import { DraggableProvided, Droppable, Draggable } from 'react-beautiful-dnd';
-import DraggableItem from '../DraggableItem/DraggableItem';
-import { DraggableListProps } from '../interfaces';
+import DraggableOrder from '../DraggableOrder/DraggableOrder';
+import { DraggableOrderListProps } from '../../interface/draggable';
 
-const DraggableList = (props: DraggableListProps) => (
+const DraggableOrderList = (props: DraggableOrderListProps) => (
     <Droppable droppableId={props.ID}>
         {(provided) => (
             <div
@@ -25,13 +25,13 @@ const DraggableList = (props: DraggableListProps) => (
                             index={index}
                         >
                             {(provided: DraggableProvided) => (
-                                <DraggableItem
+                                <DraggableOrder
                                     OrderID={item.OrderID}
                                     CustomerID={item.CustomerID}
                                     ProductID={item.ProductID}
                                     OrderStatus={item.OrderStatus}
                                     draggableProvided={provided}
-                                    removeOrder={props.removeOrder}
+                                    onDragEnd={props.onDragEnd}
                                 />
                             )}
                         </Draggable>
@@ -43,4 +43,4 @@ const DraggableList = (props: DraggableListProps) => (
     </Droppable>
 );
 
-export default DraggableList;
+export default DraggableOrderList;

@@ -16,13 +16,13 @@ def init_db():
 
     active_product = Product(
         ProductName="Test1",
-        ProductPhotoURL="/test1",
+        ProductPhotoURL="https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-199-scaled.jpg",
         ProductStatus="Active"
     )
     active_product.save()
     in_active_product = Product(
         ProductName="Test2",
-        ProductPhotoURL="/test2",
+        ProductPhotoURL="https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-283-scaled.jpg",
         ProductStatus="InActive"
     )
     in_active_product.save()

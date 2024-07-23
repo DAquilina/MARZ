@@ -1,8 +1,8 @@
 import React from "react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { INPIPELINE_URL } from "../ApiHelper";
-import { render, screen, waitFor} from '@testing-library/react';
+import { INPIPELINE_URL } from "../../services/order.service";
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import HomePage from "./HomePage";
 
@@ -15,23 +15,23 @@ describe("HomePage", () => {
         );
         expect(screen.getByTestId(`loading-spinner-container`)).toBeInTheDocument();
     });
-    it("shouldDisplayPipelineContainer", async() => {
+    it("shouldDisplayPipelineContainer", async () => {
         // set up mock for axios.get
         const response = {
             data: [
                 {
-                  "CustomerID": 1,
-                  "OrderID": 2,
-                  "OrderStatus": "Queued",
-                  "ProductID": 1
+                    "CustomerID": 1,
+                    "OrderID": 2,
+                    "OrderStatus": "Queued",
+                    "ProductID": 1
                 },
             ],
             message: ""
         };
         const server = setupServer(
-          rest.get(INPIPELINE_URL, (req, res, ctx) => {
-            return res(ctx.status(200), ctx.json(response));
-          })
+            rest.get(INPIPELINE_URL, (req, res, ctx) => {
+                return res(ctx.status(200), ctx.json(response));
+            })
         );
         server.listen();
         render(
@@ -44,16 +44,16 @@ describe("HomePage", () => {
         });
         server.close();
     });
-    it("shouldDisplayErrorMessage", async() => {
+    it("shouldDisplayErrorMessage", async () => {
         // set up mock for axios.get
         const response = {
             data: [],
             message: "Error"
         };
         const server = setupServer(
-          rest.get(INPIPELINE_URL, (req, res, ctx) => {
-            return res(ctx.status(500), ctx.json(response));
-          })
+            rest.get(INPIPELINE_URL, (req, res, ctx) => {
+                return res(ctx.status(500), ctx.json(response));
+            })
         );
         server.listen();
         render(
@@ -61,7 +61,7 @@ describe("HomePage", () => {
                 <HomePage />
             </MemoryRouter>
         );
-        
+
         await waitFor(() => {
             expect(screen.getByTestId(`error-container`)).toBeInTheDocument();
         });

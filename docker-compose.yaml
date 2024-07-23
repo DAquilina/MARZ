@@ -54,6 +54,7 @@ services:
       - MYSQL_PASSWORD=MARZ_p@ss
       - MYSQL_HOST=172.17.0.1
       - MYSQL_PORT=3306
+      - PYTHONUNBUFFERED=1
     networks:
       - app_network
 
@@ -75,9 +76,10 @@ services:
       - MYSQL_PASSWORD=MARZ_p@ss
       - MYSQL_HOST=172.17.0.1
       - MYSQL_PORT=3306
+      - PYTHONUNBUFFERED=1
     networks:
       - app_network
-  
+
   mariadb:
     image: mariadb:10.2
     container_name: mariadb

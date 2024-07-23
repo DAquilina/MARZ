@@ -1,9 +1,10 @@
-import React from "react";
 import { DraggableProvided } from "react-beautiful-dnd";
 import { create, ReactTestRenderer} from 'react-test-renderer';
-import DraggableItem from './DraggableItem';
 
-describe('DraggableItem', () => {
+import DraggableOrder from './DraggableOrder';
+
+
+describe('DraggableOrder', () => {
   let tree: ReactTestRenderer;
   const ID = '1234';
   beforeEach(() => {
@@ -21,14 +22,14 @@ describe('DraggableItem', () => {
       ProductID: 3456,
       OrderStatus: 'QA', 
       draggableProvided,
-      removeOrder: () => {},
+      onDragEnd: () => {},
   };
-    tree = create(<DraggableItem {...props} />);
+    tree = create(<DraggableOrder {...props} />);
   });
   afterEach(() => {
     tree.unmount();
   });
-  it('rendersDraggableItem', async () => {
+  it('rendersDraggableOrder', async () => {
     const testInstance = tree.root;
     await testInstance.findByProps({ 'data-testid': `draggable-container-${ID}`});
     await testInstance.findByProps({ 'data-testid': `draggable-customerID-${ID}`});

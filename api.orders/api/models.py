@@ -18,7 +18,8 @@ db = MariaDBConnectorDatabase(
     user=MYSQL_USER,
     password=MYSQL_PASSWORD,
     host=MYSQL_HOST,
-    port=MYSQL_PORT
+    port=MYSQL_PORT,
+    autocommit=True
 )
 
 PRODUCT_STATUSES = {

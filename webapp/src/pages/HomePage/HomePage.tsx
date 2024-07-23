@@ -1,44 +1,45 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { DragDropContext } from 'react-beautiful-dnd';
-import DraggableList from "../../components/DraggableList/DraggableList";
-import Spinner from "../../components/Spinner/Spinner";
-import { Order, OrderData } from "../../components/interfaces";
-import { getInPipelineData, updateOrderStatus } from "../ApiHelper";
-import PageWrapper from '../PageWrapper';
+import { useEffect, useState } from "react";
 
-const DATA_STATES = {
-  waiting: 'WAITING',
-  loaded: 'LOADED',
-  error: 'ERROR'
-};
+import { DragDropContext } from "react-beautiful-dnd";
+
+import PageWrapper from "../PageWrapper";
+
+import DraggableOrderList from "../../components/DraggableOrderList/DraggableOrderList";
+import Spinner from "../../components/Spinner/Spinner";
+
+import { DataState } from "../../enum/data-state";
+
+import { Order, OrderData } from "../../interface/order";
+
+import { getInPipelineData, updateOrderStatus } from "../../services/order.service";
+
 
 interface IdList {
-  '0': string;
-  '1': string;
-  '2': string;
+  "0": string;
+  "1": string;
+  "2": string;
 }
 
 const ID_LIST_MAP: IdList = {
-  '0': 'Queued',
-  '1': 'InProgress',
-  '2': 'QA'
+  "0": "Queued",
+  "1": "InProgress",
+  "2": "QA"
 };
 
 const HomePage = () => {
-  const [loadingState, setLoadingState] = useState(DATA_STATES.waiting);
+  const [loadingState, setLoadingState] = useState(DataState.Waiting);
   const [data, setData] = useState({Queued: [], InProgress: [], QA: []} as OrderData);
 
   const getOrders = async () => {
-    setLoadingState(DATA_STATES.waiting);
+    setLoadingState(DataState.Waiting);
     const { orderData, errorOccurred } = await getInPipelineData();
     setData(orderData);
-    setLoadingState(errorOccurred ? DATA_STATES.error : DATA_STATES.loaded);
+    setLoadingState(errorOccurred ? DataState.Error : DataState.Loaded);
   };
 
   const updateOrder = async (order: Order) => {
-    setLoadingState(DATA_STATES.waiting);
-    const newOrderStatus = order.OrderStatus === 'QA' ? 'Complete' : 'Cancelled';
+    setLoadingState(DataState.Waiting);
+    const newOrderStatus = order.OrderStatus === "QA" ? "Complete" : "Cancelled";
     const orderStatusUpdated = await updateOrderStatus(order, newOrderStatus);
     if (orderStatusUpdated) {
       const columnKey = order.OrderStatus as keyof OrderData
@@ -49,7 +50,7 @@ const HomePage = () => {
         ),
       });
     }
-    setLoadingState(DATA_STATES.loaded);
+    setLoadingState(DataState.Loaded);
   };
 
   const handleDragEnd = (result: any) => {
@@ -86,7 +87,7 @@ const HomePage = () => {
   }, []);
 
   let content;
-  if (loadingState === DATA_STATES.waiting)
+  if (loadingState === DataState.Waiting)
     content = (
       <div
         className="flex flex-row justify-center w-full pt-4"
@@ -95,29 +96,29 @@ const HomePage = () => {
         <Spinner />
       </div>
     );
-  else if (loadingState === DATA_STATES.loaded) 
+  else if (loadingState === DataState.Loaded) 
     content = (
       <div
         className="flex flex-row justify-center w-full pt-4"
         data-testid="pipeline-container"
       >
         <DragDropContext onDragEnd={handleDragEnd}>
-          <DraggableList
-            ID='0'
-            listTitle='Queued'
-            removeOrder={(order: Order) => updateOrder(order)}
+          <DraggableOrderList
+            ID="0"
+            listTitle="Queued"
+            onDragEnd={(order: Order) => updateOrder(order)}
             items={data.Queued}
           />
-          <DraggableList
-            ID='1'
-            listTitle='In Progess'
-            removeOrder={(order: Order) => updateOrder(order)}
+          <DraggableOrderList
+            ID="1"
+            listTitle="In Progress"
+            onDragEnd={(order: Order) => updateOrder(order)}
             items={data.InProgress}
           />
-          <DraggableList
-            ID='2'
-            listTitle='QA'
-            removeOrder={(order: Order) => updateOrder(order)}
+          <DraggableOrderList
+            ID="2"
+            listTitle="QA"
+            onDragEnd={(order: Order) => updateOrder(order)}
             items={data.QA}
           />
         </DragDropContext>

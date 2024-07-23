@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5002
 
 COPY . .
-CMD [ "python3", "-m", "app"]
+CMD [ "python3", "-u", "-m", "app"]

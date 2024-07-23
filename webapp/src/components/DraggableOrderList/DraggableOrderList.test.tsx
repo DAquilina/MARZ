@@ -1,16 +1,15 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react'
 import { DragDropContext } from 'react-beautiful-dnd';
-import DraggableList from './DraggableList';
-import { Order } from '../interfaces';
+import DraggableOrderList from './DraggableOrderList';
+import { Order } from '../../interface/order';
 
-describe('DraggableList', () => {
-    it('rendersDraggableList', async () => {
+describe('DraggableOrderList', () => {
+    it('DraggableOrderList', async () => {
         const ID = '1234';
         const props = {
             ID,
             listTitle: 'Test List',
-            removeOrder: (order: Order) => {},
+            onDragEnd: (order: Order) => {},
             items: [
                 { OrderID: 1234, CustomerID: 1234, ProductID: 123456, OrderStatus: 'InProgress' },
                 { OrderID: 1235, CustomerID: 1235, ProductID: 123456, OrderStatus: 'InProgress' },
@@ -19,7 +18,7 @@ describe('DraggableList', () => {
         };
         render(
             <DragDropContext onDragEnd={() => {}}>
-                <DraggableList {...props} />
+                <DraggableOrderList {...props} />
             </DragDropContext>
         );
         expect(screen.getByTestId(`droppable-container-${ID}`)).toBeInTheDocument();

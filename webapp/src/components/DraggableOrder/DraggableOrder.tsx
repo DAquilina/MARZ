@@ -1,9 +1,8 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXmark, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
-import { DraggableItemProps } from '../interfaces';
+import { DraggableOrderProps } from '../../interface/draggable';
 
-const DraggableItem = (props: DraggableItemProps) => (
+const DraggableOrder = (props: DraggableOrderProps) => (
     <div
         ref={props.draggableProvided.innerRef}
         {...props.draggableProvided.draggableProps}
@@ -14,9 +13,9 @@ const DraggableItem = (props: DraggableItemProps) => (
         <span data-testid={`draggable-customerID-${props.OrderID}`}>{ props.CustomerID }</span>
         <span data-testid={`draggable-productID-${props.OrderID}`}>{ props.ProductID }</span>
         {(() => {
-            const { OrderID, CustomerID, ProductID, OrderStatus, removeOrder } = props;
+            const { OrderID, CustomerID, ProductID, OrderStatus, onDragEnd } = props;
             return (
-                <button onClick={() => removeOrder({ OrderID, CustomerID, ProductID, OrderStatus })}>
+                <button onClick={() => onDragEnd({ OrderID, CustomerID, ProductID, OrderStatus })}>
                     <FontAwesomeIcon
                         icon={OrderStatus === 'QA' ? faSquareCheck : faSquareXmark}
                         className={`${OrderStatus === 'QA' ? 'text-green-600' : 'text-red-600'} fa-lg`}
@@ -28,4 +27,4 @@ const DraggableItem = (props: DraggableItemProps) => (
     </div>
 );
 
-export default DraggableItem;
+export default DraggableOrder;

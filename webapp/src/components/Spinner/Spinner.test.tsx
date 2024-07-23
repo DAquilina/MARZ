@@ -1,8 +1,7 @@
-import React from "react";
 import { create, ReactTestRenderer} from 'react-test-renderer';
 import Spinner from './Spinner';
 
-describe('DraggableItem', () => {
+describe('DraggableOrder', () => {
   let tree: ReactTestRenderer;
   beforeEach(() => {
     tree = create(<Spinner />);
@@ -10,7 +9,7 @@ describe('DraggableItem', () => {
   afterEach(() => {
     tree.unmount();
   });
-  it('rendersDraggableItem', async () => {
+  it('rendersDraggableOrder', async () => {
     const testInstance = tree.root;
     await testInstance.findByProps({ 'data-testid': `spinner-container`});
   });
