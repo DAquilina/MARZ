@@ -38,14 +38,6 @@ const ProductsPage = () => {
     
     const initialStatus = source.droppableId as ProductStatus;
     const targetStatus = destination.droppableId as ProductStatus;
-    
-    // DEBUG
-    console.log({
-      target: data[initialStatus][source.index],
-      newStatus: targetStatus,
-      dragIndex: source.index,
-      dropIndex: destination.index
-    });
 
     setProductDragged({
       target: data[initialStatus][source.index],
@@ -75,7 +67,6 @@ const ProductsPage = () => {
         setLoadingState(DataState.Loaded);
       }
     };
-
 
     getProductData();
   }, []);
@@ -201,7 +192,6 @@ const ProductsPage = () => {
       // Undo the move if there's an error
       if (response !== true) {
         setData(moveProduct(product, product.ProductStatus, dragIndex));
-        setLoadingState(DataState.Error);
       }
     };
 
@@ -238,20 +228,20 @@ const ProductsPage = () => {
     content = (
       <div
         className="flex flex-row justify-center w-full pt-4"
-        data-testid="pipeline-container"
+        data-testid="product-list-container"
       >
         <DragDropContext onDragEnd={handleDragEnd}>
           <DraggableProductList
             ID={ProductStatus.Active}
             listTitle="Active products"
             onDragEnd={() => {}}
-            items={data ? data[ProductStatus.Active] : []}
+            items={data ? data[ProductStatus.Active] ?? [] : []}
           />
           <DraggableProductList
             ID={ProductStatus.Inactive}
             listTitle="Inactive Products"
             onDragEnd={() => {}}
-            items={data ? data[ProductStatus.Inactive] : []}
+            items={data ? data[ProductStatus.Inactive] ?? [] : []}
           />
         </DragDropContext>
       </div>

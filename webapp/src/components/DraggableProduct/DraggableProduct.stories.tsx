@@ -26,7 +26,7 @@ const draggableProvided: DraggableProvided = ({
     dragHandleProps: null,
 }); 
 
-const getArgs = (status: ProductStatus) => ({
+const getArgs = (status: ProductStatus | undefined) => ({
     ProductID: ID,
     ProductName: "Test",
     ProductPhotoURL: "https://www.cira.ca/uploads/gallery/cira-stock-images/CIRAstock-190-scaled.jpg",
